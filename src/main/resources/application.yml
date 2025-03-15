@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: springrest
+  datasource:
+    url: jdbc:mysql://localhost:33061/springrest?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: juscelinot
+    password: lola2025
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 30000
+
+  jpa:
+    hibernate:
+      ddl-auto: update  # change to 'none' if schema should not be modified
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect

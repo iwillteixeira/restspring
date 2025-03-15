@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.springrest.springrest.PersonServices;
 import br.com.springrest.springrest.model.Person;
+import br.com.springrest.springrest.services.PersonServices;
 
 
 @RestController
@@ -33,7 +33,7 @@ public class PersonController {
         method=RequestMethod.GET,
         produces=MediaType.APPLICATION_JSON_VALUE)
 
-    public Person findById(@PathVariable("id") String id){
+    public Person findById(@PathVariable("id") Long id){
         return service.findById(id);
     }
 
@@ -41,7 +41,7 @@ public class PersonController {
         method=RequestMethod.DELETE
         )
 
-    public void delete(@PathVariable("id") String id){
+    public void delete(@PathVariable("id") Long id){
          service.delete(id);
     }
 

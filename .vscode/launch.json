@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Teste",
+            "request": "launch",
+            "mainClass": "br.com.springrest.Teste",
+            "projectName": "springrest"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-SpringrestApplication<springrest>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
