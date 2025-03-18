@@ -7,8 +7,10 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.springrest.springrest.dto.PersonDTO;
 import br.com.springrest.springrest.exception.ResourceNotFoundException;
 import br.com.springrest.springrest.exception.handler.CustomEntityResponseHandler;
+import br.com.springrest.springrest.mapper.ObjectMapper;
 import br.com.springrest.springrest.model.Person;
 import br.com.springrest.springrest.repository.PersonRepository;
 
@@ -28,17 +30,18 @@ public class PersonServices {
         this.customEntityResponseHandler = customEntityResponseHandler;
     }
     
-    public List<Person> findAll(){
-        return repository.findAll();
+    public List<PersonDTO> findAll(){
+        return ObjectMapper.parseListOBjects(repository.findAll(), PersonDTO.class);
         
     }
 
-    public Person create(Person person){
+    public PersonDTO create(PersonDTO person){
         logger.info("creating one person");
-        return repository.save(person);
+        var entity = ObjectMapper.parseObject(person, Person.class);
+        return ObjectMapper.parseObject(repository.save(entity), PersonDTO.class) ;
     }
 
-    public Person update(Person person){
+    public PersonDTO update(PersonDTO person){
         logger.info("Updating one person");
         Person entity = repository.findById(person.getId()).orElseThrow(()-> new ResourceNotFoundException("no records") );
    
@@ -46,7 +49,7 @@ public class PersonServices {
         entity.setLastName(person.getLastName());
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
-        return repository.save(entity);
+        return ObjectMapper.parseObject(repository.save(entity), PersonDTO.class);
     }
 
     public void delete(Long id){
@@ -55,9 +58,11 @@ public class PersonServices {
         repository.delete(entity);
     }
 
-    public Person findById(Long id){
+    public PersonDTO findById(Long id){
         logger.info("Finding one Person");
-        return repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("no records") );
+        var entity = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("no records") );
+        return ObjectMapper.parseObject(entity, PersonDTO.class);
+
     }
 
 }

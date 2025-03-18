@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.springrest.springrest.dto.PersonDTO;
 import br.com.springrest.springrest.model.Person;
 import br.com.springrest.springrest.services.PersonServices;
 
@@ -25,7 +26,7 @@ public class PersonController {
         method=RequestMethod.GET,
         produces=MediaType.APPLICATION_JSON_VALUE)
 
-    public List<Person> findAll(){
+    public List<PersonDTO> findAll(){
         return service.findAll();
     }
     
@@ -33,7 +34,7 @@ public class PersonController {
         method=RequestMethod.GET,
         produces=MediaType.APPLICATION_JSON_VALUE)
 
-    public Person findById(@PathVariable("id") Long id){
+    public PersonDTO findById(@PathVariable("id") Long id){
         return service.findById(id);
     }
 
@@ -50,7 +51,7 @@ public class PersonController {
         consumes=MediaType.APPLICATION_JSON_VALUE,
         produces=MediaType.APPLICATION_JSON_VALUE)
 
-    public Person create(@RequestBody Person person){
+    public PersonDTO create(@RequestBody PersonDTO person){
         return service.create(person);
     }
 
@@ -59,7 +60,7 @@ public class PersonController {
         consumes=MediaType.APPLICATION_JSON_VALUE,
         produces=MediaType.APPLICATION_JSON_VALUE)
 
-    public Person update(@RequestBody Person person){
+    public PersonDTO update(@RequestBody PersonDTO person){
         return service.update(person);
     }
     
