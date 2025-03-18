@@ -7,10 +7,12 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.springrest.springrest.dto.PersonDTO;
+import br.com.springrest.springrest.dto.v1.PersonDTO;
+import br.com.springrest.springrest.dto.v2.PersonDTOV2;
 import br.com.springrest.springrest.exception.ResourceNotFoundException;
 import br.com.springrest.springrest.exception.handler.CustomEntityResponseHandler;
 import br.com.springrest.springrest.mapper.ObjectMapper;
+import br.com.springrest.springrest.mapper.custom.PersonMapper;
 import br.com.springrest.springrest.model.Person;
 import br.com.springrest.springrest.repository.PersonRepository;
 
@@ -23,6 +25,9 @@ public class PersonServices {
 
     @Autowired
     PersonRepository repository;
+
+    @Autowired
+    PersonMapper converter;
 
     private Logger logger = Logger.getLogger(PersonServices.class.getName());
 
@@ -39,6 +44,12 @@ public class PersonServices {
         logger.info("creating one person");
         var entity = ObjectMapper.parseObject(person, Person.class);
         return ObjectMapper.parseObject(repository.save(entity), PersonDTO.class) ;
+    }
+
+    public PersonDTOV2 createV2(PersonDTOV2 person){
+        logger.info("creating one person");
+        var entity = converter.convertDTOToEntity(person);
+        return converter.convertEntityToDTO(repository.save(entity)) ;
     }
 
     public PersonDTO update(PersonDTO person){
